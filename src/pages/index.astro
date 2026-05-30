@@ -1,0 +1,188 @@
+---
+/**
+ * Home (/) — Hero + propuesta de valor + 3 bloques de confianza + 4 categorías + CTA.
+ * Copy literal de copywriting_central_oro.md §Página 1. Esta página define el
+ * lenguaje visual del resto del sitio.
+ */
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import TrustBlock from "../components/TrustBlock.astro";
+import CategoryCard from "../components/CategoryCard.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import { whatsappLink, wa } from "../data/site.ts";
+
+// Imágenes de categoría — PLACEHOLDERS de Unsplash (CLAUDE.md §9 · ver CREDITS.md)
+import imgArgollas from "../assets/images/categoria-argollas.jpg";
+import imgAnillos from "../assets/images/categoria-anillos.jpg";
+import imgColecciones from "../assets/images/categoria-colecciones.jpg";
+import imgReparacion from "../assets/images/categoria-reparacion.jpg";
+
+const trust = [
+  {
+    title: "Más de 30 años de oficio en Temuco",
+    text: "Desde 1995 atendemos a familias de toda La Araucanía con el mismo cuidado con el que empezamos.",
+  },
+  {
+    title: "Trabajo personalizado, de principio a fin",
+    text: "Te acompañamos en cada decisión: el diseño, los materiales, los plazos y el resultado final.",
+  },
+  {
+    title: "Un taller, dos manos, una sola joyería",
+    text: "Somos un negocio familiar. Cuando llegas, hablas directamente con quienes fabrican tu joya.",
+  },
+];
+
+const categorias = [
+  {
+    title: "Argollas de matrimonio",
+    text: "La pieza que se usa todos los días merece el tiempo que le dedicamos.",
+    image: imgArgollas,
+    alt: "Argollas de matrimonio en oro hechas a mano en Temuco",
+    href: "/colecciones",
+  },
+  {
+    title: "Anillos de compromiso",
+    text: "Diseñados a la medida del momento.",
+    image: imgAnillos,
+    alt: "Anillo de compromiso diseñado a medida en Temuco",
+    href: "/colecciones",
+  },
+  {
+    title: "Colecciones en oro y plata",
+    text: "Collares, pulseras y aretes en materiales que duran.",
+    image: imgColecciones,
+    alt: "Collares y cadenas en oro y plata, joyería artesanal en Temuco",
+    href: "/colecciones",
+  },
+  {
+    title: "Reparación y restauración",
+    text: "Devolvemos la vida a las joyas que tienen historia.",
+    image: imgReparacion,
+    alt: "Joyero restaurando una joya antigua en su taller en Temuco",
+    href: "/reparacion",
+  },
+];
+---
+
+<BaseLayout
+  title="Joyería Central Oro Temuco | Argollas y Diseños Personalizados desde 1995"
+  description="Joyas únicas hechas a mano en Temuco desde 1995. Argollas de matrimonio, anillos de compromiso y trabajos personalizados. Atención directa con los maestros joyeros en el centro de Temuco."
+>
+  <Hero />
+
+  <!-- Propuesta de valor -->
+  <section class="section value">
+    <div class="container">
+      <p class="value__text prose">
+        En Joyería Central Oro no trabajamos con catálogos fijos ni colecciones de
+        temporada. Cada pieza la hacemos cuando alguien la necesita, con los materiales
+        que ese momento merece.
+      </p>
+    </div>
+  </section>
+
+  <!-- Bloques de confianza -->
+  <section class="section section--crema">
+    <div class="container trust-grid">
+      {trust.map((b) => <TrustBlock title={b.title} text={b.text} />)}
+    </div>
+  </section>
+
+  <!-- Categorías -->
+  <section class="section">
+    <div class="container">
+      <SectionTitle eyebrow="Lo que hacemos" title="Cada pieza tiene un origen" />
+      <div class="cat-grid">
+        {
+          categorias.map((c) => (
+            <CategoryCard
+              title={c.title}
+              text={c.text}
+              image={c.image}
+              alt={c.alt}
+              href={c.href}
+              cta="Conocer más"
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA de cierre -->
+  <section class="section">
+    <div class="container cta">
+      <h2 class="cta__title">¿Tienes algo en mente? Cuéntanos.</h2>
+      <a href={whatsappLink(wa.default)} class="btn btn--primary" target="_blank" rel="noopener noreferrer">
+        Escribirnos por WhatsApp
+      </a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .section {
+    padding-block: var(--space-section);
+  }
+  .section--crema {
+    background: var(--color-crema);
+  }
+
+  /* Propuesta de valor */
+  .value {
+    padding-block: clamp(3rem, 8vw, 6rem);
+  }
+  .value__text {
+    font-family: var(--font-display);
+    font-size: var(--fs-h2);
+    line-height: 1.45;
+    color: var(--color-tinta);
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  /* Confianza */
+  .trust-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  /* Categorías */
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: clamp(2rem, 5vw, 3rem);
+  }
+
+  /* CTA de cierre */
+  .cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.75rem;
+  }
+  .cta__title {
+    font-style: italic;
+    font-size: var(--fs-h1);
+    max-width: 18ch;
+  }
+
+  @media (max-width: 900px) {
+    .cat-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 720px) {
+    .trust-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 480px) {
+    .cat-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

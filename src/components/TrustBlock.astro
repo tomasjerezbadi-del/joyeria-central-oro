@@ -1,0 +1,42 @@
+---
+/**
+ * TrustBlock — bloque de confianza (título display + texto).
+ * Usado en la Home (×3). Copy en copywriting_central_oro.md §Bloques de confianza.
+ */
+interface Props {
+  title: string;
+  text: string;
+}
+const { title, text } = Astro.props;
+---
+
+<div class="trust">
+  <span class="trust__rombo" aria-hidden="true"></span>
+  <h3 class="trust__title">{title}</h3>
+  <p class="trust__text">{text}</p>
+</div>
+
+<style>
+  .trust {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .trust__rombo {
+    width: 8px;
+    height: 8px;
+    background: var(--color-oro);
+    transform: rotate(45deg);
+    margin-bottom: 0.5rem;
+  }
+  .trust__title {
+    font-size: var(--fs-h3);
+    line-height: 1.25;
+    max-width: 20ch;
+  }
+  .trust__text {
+    font-size: var(--fs-body);
+    color: var(--color-bronce);
+    line-height: 1.6;
+  }
+</style>

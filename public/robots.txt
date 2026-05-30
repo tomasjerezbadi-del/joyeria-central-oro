@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://joyeriacentraloro.cl/sitemap-index.xml

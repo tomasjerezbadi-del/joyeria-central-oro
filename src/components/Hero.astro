@@ -1,0 +1,112 @@
+---
+/**
+ * Hero de la Home — layout dividido: texto a la izquierda, fotografía a la derecha.
+ * Copy literal de copywriting_central_oro.md §Hero. La imagen carga con prioridad (eager).
+ */
+import { Image } from "astro:assets";
+import { whatsappLink, wa } from "../data/site.ts";
+// PLACEHOLDER: reemplazar con foto propia del taller (CLAUDE.md §9)
+import heroImg from "../assets/images/hero-taller.jpg";
+---
+
+<section class="hero">
+  <div class="container hero__inner">
+    <div class="hero__text">
+      <span class="eyebrow">Joyería artesanal · Temuco</span>
+      <h1 class="hero__title">Joyas hechas a mano en Temuco, desde 1995.</h1>
+      <p class="hero__subtitle">
+        Treinta años fabricando piezas únicas para los momentos que no se repiten.
+      </p>
+      <div class="hero__actions">
+        <a href="/colecciones" class="btn btn--primary">Ver colecciones</a>
+        <a href="/personalizado" class="btn btn--secondary">
+          Cotizar trabajo personalizado
+        </a>
+      </div>
+    </div>
+
+    <div class="hero__media">
+      <Image
+        src={heroImg}
+        alt="Maestro joyero soldando una pieza a mano en el taller de Joyería Central Oro en Temuco"
+        widths={[480, 800, 1200]}
+        sizes="(max-width: 900px) 100vw, 50vw"
+        loading="eager"
+        fetchpriority="high"
+        class="hero__img"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-top: clamp(2.5rem, 6vw, 4.5rem);
+  }
+  .hero__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: clamp(2rem, 5vw, 4.5rem);
+  }
+
+  .hero__text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+  .hero__title {
+    font-style: italic;
+    font-weight: 500;
+    font-size: var(--fs-hero);
+    line-height: 1.05;
+    max-width: 14ch;
+  }
+  .hero__subtitle {
+    font-size: var(--fs-h3);
+    color: var(--color-bronce);
+    max-width: 34ch;
+    line-height: 1.5;
+  }
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .hero__media {
+    position: relative;
+  }
+  .hero__img {
+    width: 100%;
+    height: clamp(20rem, 45vw, 34rem);
+    object-fit: cover;
+    border-radius: 2px;
+  }
+  /* línea dorada fina como marco superior-izquierdo */
+  .hero__media::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 60px;
+    height: 60px;
+    border-top: 1px solid var(--color-oro);
+    border-left: 1px solid var(--color-oro);
+  }
+
+  @media (max-width: 900px) {
+    .hero__inner {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    .hero__media {
+      order: -1;
+    }
+    .hero__img {
+      height: clamp(16rem, 60vw, 24rem);
+    }
+  }
+</style>

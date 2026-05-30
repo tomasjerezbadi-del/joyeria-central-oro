@@ -1,0 +1,63 @@
+---
+/**
+ * ProcessStep — un paso del proceso (01–04). Número grande display + título + texto.
+ * Usado en /personalizado. Ref: CLAUDE.md §6.
+ */
+interface Props {
+  number: string; // "01"–"04"
+  title: string;
+  text: string;
+}
+const { number, title, text } = Astro.props;
+---
+
+<div class="step">
+  <span class="step__num" aria-hidden="true">{number}</span>
+  <div class="step__body">
+    <h3 class="step__title">{title}</h3>
+    <p class="step__text">{text}</p>
+  </div>
+</div>
+
+<style>
+  .step {
+    display: flex;
+    gap: 1.5rem;
+    align-items: baseline;
+  }
+  .step__num {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    line-height: 1;
+    color: var(--color-oro);
+    flex-shrink: 0;
+    min-width: 2.5ch;
+  }
+  .step__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding-top: 0.35rem;
+  }
+  .step__title {
+    font-size: var(--fs-h3);
+    line-height: 1.25;
+  }
+  .step__text {
+    font-size: var(--fs-body);
+    color: var(--color-bronce);
+    line-height: 1.6;
+    max-width: 46ch;
+  }
+
+  @media (max-width: 560px) {
+    .step {
+      gap: 1rem;
+    }
+    .step__num {
+      font-size: 2.25rem;
+    }
+  }
+</style>

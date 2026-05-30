@@ -1,0 +1,198 @@
+---
+/**
+ * Trabajos personalizados (/personalizado) — PÁGINA ESTRELLA.
+ * Intro + proceso (4 pasos) + FAQ tiempos + qué hacemos + CTA doble.
+ * Copy literal de copywriting_central_oro.md §Página 3.
+ */
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import ProcessStep from "../components/ProcessStep.astro";
+import { whatsappLink, wa } from "../data/site.ts";
+
+const pasos = [
+  {
+    number: "01",
+    title: "La reunión inicial",
+    text: "Nos juntamos en el local, conversamos lo que tienes en mente y definimos los materiales, el diseño y el presupuesto. Sin compromiso, sin apuro.",
+  },
+  {
+    number: "02",
+    title: "La propuesta",
+    text: "Con esa información preparamos una propuesta de diseño y precio. Te la presentamos para que apruebes o ajustemos lo que sea necesario.",
+  },
+  {
+    number: "03",
+    title: "La fabricación",
+    text: "Cuando hay acuerdo, comenzamos a fabricar. Trabajamos con los materiales definidos y te mantenemos informado del avance.",
+  },
+  {
+    number: "04",
+    title: "La entrega",
+    text: "Revisamos juntos la pieza terminada. Si algo no está como lo imaginaste, lo corregimos. Solo entregamos cuando estamos satisfechos con el resultado.",
+  },
+];
+
+const trabajos = [
+  "Argollas de matrimonio a medida",
+  "Anillos de compromiso con o sin piedras",
+  "Piezas con grabado personalizado",
+  "Collares, pulseras y aretes por encargo",
+  "Joyas inspiradas en un diseño existente",
+  "Piezas para fechas especiales: graduaciones, aniversarios, regalos únicos",
+];
+---
+
+<BaseLayout
+  title="Trabajos Personalizados | Joyería Central Oro Temuco"
+  description="Diseña tu joya desde cero en Joyería Central Oro Temuco. Argollas, anillos y piezas únicas hechas a medida. Más de 30 años de experiencia en joyería personalizada en La Araucanía."
+>
+  <!-- Intro -->
+  <section class="section section--first">
+    <div class="container">
+      <SectionTitle eyebrow="El corazón de lo que hacemos" title="Trabajos personalizados" as="h1" />
+      <p class="intro prose">
+        Este es el corazón de lo que hacemos. La mayoría de las joyas que salen de
+        nuestro taller no existían antes de que el cliente llegó. Las diseñamos juntos,
+        las fabricamos a mano y las entregamos cuando están perfectas.
+      </p>
+    </div>
+  </section>
+
+  <!-- Proceso -->
+  <section class="section section--crema">
+    <div class="container">
+      <SectionTitle eyebrow="El proceso" title="Cómo trabajamos" as="h2" />
+      <div class="steps">
+        {pasos.map((p) => <ProcessStep number={p.number} title={p.title} text={p.text} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ + qué hacemos -->
+  <section class="section">
+    <div class="container two-col">
+      <div class="faq">
+        <h3 class="block-title">¿Cuánto tiempo tarda un trabajo personalizado?</h3>
+        <p>
+          Depende de la complejidad de la pieza. Un trabajo sencillo puede estar listo
+          en dos a tres semanas. Piezas más elaboradas, con grabado o piedras, pueden
+          tomar entre cuatro y seis semanas. Te damos el plazo exacto en la reunión
+          inicial, sin sorpresas.
+        </p>
+      </div>
+      <div class="hacemos">
+        <h3 class="block-title">Tipos de trabajo que realizamos</h3>
+        <ul class="list">
+          {trabajos.map((t) => <li>{t}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA final -->
+  <section class="section section--crema">
+    <div class="container cta">
+      <h2 class="cta__title">¿Tienes una idea? Cuéntanos.</h2>
+      <div class="cta__actions">
+        <a
+          href={whatsappLink(wa.personalizado)}
+          class="btn btn--primary"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Escribirnos por WhatsApp
+        </a>
+        <a href="/contacto" class="btn btn--secondary">Llenar formulario de cotización</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .section {
+    padding-block: var(--space-section);
+  }
+  .section--first {
+    padding-top: clamp(3rem, 7vw, 5rem);
+  }
+  .section--crema {
+    background: var(--color-crema);
+  }
+  .intro {
+    margin-top: 1.75rem;
+    font-size: var(--fs-h3);
+    color: var(--color-bronce);
+    line-height: 1.6;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 3.5rem) clamp(2rem, 6vw, 5rem);
+    margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2.5rem, 6vw, 5rem);
+    align-items: start;
+  }
+  .block-title {
+    font-family: var(--font-display);
+    font-size: var(--fs-h2);
+    margin-bottom: 1.1rem;
+    line-height: 1.25;
+  }
+  .faq p {
+    color: var(--color-bronce);
+    line-height: 1.7;
+    max-width: 46ch;
+  }
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+  .list li {
+    position: relative;
+    padding-left: 1.5rem;
+    color: var(--color-bronce);
+    line-height: 1.55;
+  }
+  .list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 6px;
+    height: 6px;
+    background: var(--color-oro);
+    transform: rotate(45deg);
+  }
+
+  .cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.75rem;
+  }
+  .cta__title {
+    font-style: italic;
+    font-size: var(--fs-h1);
+  }
+  .cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  @media (max-width: 760px) {
+    .steps,
+    .two-col {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

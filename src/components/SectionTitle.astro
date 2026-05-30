@@ -1,0 +1,48 @@
+---
+/**
+ * SectionTitle — encabezado de sección reutilizable.
+ * Eyebrow opcional (label en mayúsculas) + título display.
+ * `as` controla la etiqueta semántica (h2 por defecto).
+ */
+interface Props {
+  title: string;
+  eyebrow?: string;
+  as?: "h1" | "h2" | "h3";
+  align?: "left" | "center";
+}
+
+const { title, eyebrow, as = "h2", align = "left" } = Astro.props;
+const Tag = as;
+---
+
+<div class:list={["section-title", `align-${align}`]}>
+  {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+  <Tag class="section-title__heading">{title}</Tag>
+  <span class="section-title__rombo" aria-hidden="true"></span>
+</div>
+
+<style>
+  .section-title {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+  .align-center {
+    align-items: center;
+    text-align: center;
+  }
+  .section-title__heading {
+    max-width: 24ch;
+  }
+  .align-center .section-title__heading {
+    max-width: 30ch;
+  }
+  /* Rombo dorado ornamental */
+  .section-title__rombo {
+    width: 7px;
+    height: 7px;
+    margin-top: 0.4rem;
+    background: var(--color-oro);
+    transform: rotate(45deg);
+  }
+</style>

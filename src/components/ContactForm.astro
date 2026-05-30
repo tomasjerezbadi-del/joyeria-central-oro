@@ -1,0 +1,152 @@
+---
+/**
+ * ContactForm — formulario de contacto. POST a Web3Forms (sin backend).
+ * Campos y labels en copywriting_central_oro.md §Formulario. Validación HTML5 nativa.
+ */
+import { site } from "../data/site.ts";
+
+const opciones = [
+  "Trabajo personalizado",
+  "Reparación de joya",
+  "Cotización de pieza",
+  "Otra consulta",
+];
+---
+
+<form action="https://api.web3forms.com/submit" method="POST" class="form">
+  <!-- Access key de Web3Forms (PLACEHOLDER — ver src/data/site.ts) -->
+  <input type="hidden" name="access_key" value={site.web3formsKey} />
+  <input type="hidden" name="subject" value="Nueva consulta desde joyeriacentraloro.cl" />
+  <input type="hidden" name="from_name" value="Web Joyería Central Oro" />
+  <!-- Honeypot anti-spam -->
+  <input type="checkbox" name="botcheck" class="sr-only" tabindex="-1" autocomplete="off" />
+
+  <div class="form__field">
+    <label for="nombre">Nombre completo</label>
+    <input type="text" id="nombre" name="nombre" required autocomplete="name" />
+  </div>
+
+  <div class="form__field">
+    <label for="telefono">Teléfono o WhatsApp</label>
+    <input type="tel" id="telefono" name="telefono" required autocomplete="tel" />
+  </div>
+
+  <div class="form__field">
+    <label for="email">Correo electrónico <span class="form__opt">(opcional)</span></label>
+    <input type="email" id="email" name="email" autocomplete="email" />
+  </div>
+
+  <fieldset class="form__field form__fieldset">
+    <legend>¿Qué necesitas?</legend>
+    <div class="form__radios">
+      {
+        opciones.map((op, i) => (
+          <label class="form__radio">
+            <input type="radio" name="necesidad" value={op} required={i === 0} />
+            <span>{op}</span>
+          </label>
+        ))
+      }
+    </div>
+  </fieldset>
+
+  <div class="form__field">
+    <label for="mensaje">Cuéntanos un poco más <span class="form__opt">(opcional)</span></label>
+    <textarea id="mensaje" name="mensaje" rows="4"></textarea>
+  </div>
+
+  <button type="submit" class="btn btn--primary form__submit">Enviar consulta</button>
+
+  <p class="form__note">
+    Respondemos en el mismo día hábil o al siguiente. Si necesitas respuesta urgente,
+    escríbenos directo por WhatsApp.
+  </p>
+</form>
+
+<style>
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .form__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  label,
+  legend {
+    font-size: var(--fs-small);
+    font-weight: 500;
+    color: var(--color-tinta);
+  }
+  .form__opt {
+    font-weight: 400;
+    color: var(--color-arena);
+  }
+
+  input[type="text"],
+  input[type="tel"],
+  input[type="email"],
+  textarea {
+    font-size: var(--fs-body);
+    padding: 0.8rem 1rem;
+    background: var(--color-marfil);
+    border: 1px solid color-mix(in srgb, var(--color-bronce) 35%, transparent);
+    border-radius: 2px;
+    color: var(--color-tinta);
+    width: 100%;
+  }
+  input:focus,
+  textarea:focus {
+    outline: none;
+    border-color: var(--color-oro);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-oro) 25%, transparent);
+  }
+  textarea {
+    resize: vertical;
+  }
+
+  .form__fieldset {
+    border: none;
+    padding: 0;
+  }
+  .form__fieldset legend {
+    margin-bottom: 0.75rem;
+  }
+  .form__radios {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.65rem;
+  }
+  .form__radio {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 400;
+    color: var(--color-bronce);
+    cursor: pointer;
+  }
+  .form__radio input {
+    accent-color: var(--color-bronce);
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .form__submit {
+    align-self: flex-start;
+    margin-top: 0.5rem;
+  }
+  .form__note {
+    font-size: var(--fs-small);
+    color: var(--color-arena);
+    line-height: 1.55;
+    max-width: 52ch;
+  }
+
+  @media (max-width: 480px) {
+    .form__radios {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

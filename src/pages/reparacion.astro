@@ -1,0 +1,297 @@
+---
+/**
+ * Reparación y restauración (/reparacion) — intro + bloque emocional + lista + CTA.
+ * Copy literal de copywriting_central_oro.md §Página 4.
+ */
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import { Image } from "astro:assets";
+import { whatsappLink, wa } from "../data/site.ts";
+// PLACEHOLDER: reemplazar con foto propia del taller (CLAUDE.md §9)
+import imgReparacion from "../assets/images/categoria-reparacion.jpg";
+import imgEnchape from "../assets/images/categoria-pulseras.jpg";
+
+const trabajos = [
+  "Soldaduras y uniones",
+  "Cambio y montaje de piedras",
+  "Engrosamiento y refuerzo de piezas desgastadas",
+  "Cambio y reparación de cierres",
+  "Limpieza y pulido profesional",
+  "Adaptación de tallas en anillos y argollas",
+  "Restauración de joyas antiguas o heredadas",
+  "Grabado en piezas existentes",
+  "Enchape en oro y plata de joyas y relojes",
+];
+---
+
+<BaseLayout
+  title="Reparación de Joyas en Temuco | Joyería Central Oro"
+  description="Reparamos y restauramos joyas en Temuco. Soldaduras, cambio de piedras, limpieza profunda y recuperación de piezas antiguas. Más de 30 años de experiencia en joyería en La Araucanía."
+>
+  <!-- Intro -->
+  <section class="section section--first">
+    <div class="container">
+      <SectionTitle eyebrow="Oficio y cuidado" title="Reparación y restauración de joyas" as="h1" />
+      <div class="intro prose">
+        <p class="intro__lead">
+          Algunas joyas no se compran. Se reciben. Y cuando llegan con el tiempo encima,
+          las traes a nosotros.
+        </p>
+        <p>
+          Trabajamos con joyas de todo tipo y condición. Soldaduras rotas, cierres que no
+          funcionan, piedras sueltas o perdidas, piezas que necesitan una limpieza
+          profunda. También restauramos joyas antiguas que llevan décadas guardadas y
+          merecen volver a usarse.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bloque emocional -->
+  <section class="section section--crema">
+    <div class="container emotional">
+      <div class="emotional__media">
+        <Image
+          src={imgReparacion}
+          alt="Joyero restaurando una joya antigua en su taller en Temuco"
+          widths={[480, 800]}
+          sizes="(max-width: 860px) 100vw, 50vw"
+          loading="lazy"
+          class="emotional__img"
+        />
+      </div>
+      <div class="emotional__text">
+        <h2 class="emotional__title">La joya de tu abuela merece otra vida</h2>
+        <p>
+          Tenemos clientes que nos traen piezas que llevan veinte o treinta años en un
+          cajón. Un anillo que se rompió, una pulsera que perdió su cierre, un collar que
+          nadie sabe muy bien cómo terminó así.
+        </p>
+        <p>
+          Los restauramos, y muchas veces quien los recibe de vuelta no puede creer que
+          es la misma pieza.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Enchape en oro y plata -->
+  <section class="section">
+    <div class="container enchape">
+      <div class="enchape__text">
+        <span class="eyebrow">Un servicio más del taller</span>
+        <h2 class="enchape__title">Enchape en oro y plata, para joyas y relojes</h2>
+        <p>
+          El enchape es un baño fino de oro o de plata que aplicamos sobre la superficie
+          de una pieza. Con el uso de todos los días, muchas joyas y relojes van perdiendo
+          el color de su capa exterior: el enchape lo recupera y los deja como se veían
+          cuando eran nuevos. También sirve para cambiar el tono de una pieza —de plata a
+          un acabado dorado, por ejemplo— sin tener que reemplazarla.
+        </p>
+        <p>
+          Lo hacemos tanto en joyas —anillos, cadenas, pulseras y aretes— como en relojes.
+          Tráenos la pieza al local y te decimos qué se puede hacer y cómo va a quedar.
+        </p>
+        <a
+          href={whatsappLink(wa.enchape)}
+          class="btn btn--secondary enchape__cta"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Consultar por un enchape
+        </a>
+      </div>
+      <div class="enchape__media">
+        <Image
+          src={imgEnchape}
+          alt="Pieza de joyería en oro tras un enchape, en el taller de Joyería Central Oro en Temuco"
+          widths={[480, 800]}
+          sizes="(max-width: 860px) 100vw, 50vw"
+          loading="lazy"
+          class="enchape__img"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Trabajos -->
+  <section class="section section--crema">
+    <div class="container">
+      <h3 class="block-title">Lo que hacemos</h3>
+      <ul class="list">
+        {trabajos.map((t) => <li>{t}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="container cta">
+      <p class="cta__text prose">
+        Trae tu joya al local o escríbenos con una foto para darte una orientación de
+        precio.
+      </p>
+      <div class="cta__actions">
+        <a
+          href={whatsappLink(wa.reparacion)}
+          class="btn btn--primary"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Escribir por WhatsApp
+        </a>
+        <a href="/contacto" class="btn btn--secondary">Cómo llegar al local</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .section {
+    padding-block: var(--space-section);
+  }
+  .section--first {
+    padding-top: clamp(3rem, 7vw, 5rem);
+  }
+  .section--crema {
+    background: var(--color-crema);
+  }
+  .intro {
+    margin-top: 1.75rem;
+  }
+  .intro__lead {
+    font-family: var(--font-display);
+    font-size: var(--fs-h2);
+    font-style: italic;
+    color: var(--color-tinta);
+    line-height: 1.4;
+    margin-bottom: 1.25rem;
+  }
+  .intro p {
+    color: var(--color-bronce);
+    line-height: 1.7;
+  }
+
+  .emotional {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+  .emotional__img {
+    width: 100%;
+    height: clamp(18rem, 38vw, 28rem);
+    object-fit: cover;
+    border-radius: 2px;
+  }
+  .emotional__title {
+    font-style: italic;
+    font-size: var(--fs-h1);
+    margin-bottom: 1.25rem;
+    line-height: 1.15;
+    max-width: 16ch;
+  }
+  .emotional__text p {
+    color: var(--color-bronce);
+    line-height: 1.7;
+    max-width: 46ch;
+  }
+  .emotional__text p + p {
+    margin-top: 1rem;
+  }
+
+  /* Enchape (texto izquierda, imagen derecha) */
+  .enchape {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+  .enchape__title {
+    font-style: italic;
+    font-size: var(--fs-h1);
+    margin: 0.9rem 0 1.25rem;
+    line-height: 1.15;
+    max-width: 18ch;
+  }
+  .enchape__text p {
+    color: var(--color-bronce);
+    line-height: 1.7;
+    max-width: 48ch;
+  }
+  .enchape__text p + p {
+    margin-top: 1rem;
+  }
+  .enchape__cta {
+    margin-top: 1.75rem;
+  }
+  .enchape__img {
+    width: 100%;
+    height: clamp(18rem, 38vw, 28rem);
+    object-fit: cover;
+    border-radius: 2px;
+  }
+
+  .block-title {
+    font-family: var(--font-display);
+    font-size: var(--fs-h2);
+    margin-bottom: 1.75rem;
+  }
+  .list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.9rem 2rem;
+    max-width: 760px;
+  }
+  .list li {
+    position: relative;
+    padding-left: 1.5rem;
+    color: var(--color-bronce);
+    line-height: 1.5;
+  }
+  .list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.5em;
+    width: 6px;
+    height: 6px;
+    background: var(--color-oro);
+    transform: rotate(45deg);
+  }
+
+  .cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+  }
+  .cta__text {
+    font-size: var(--fs-h3);
+    color: var(--color-tinta);
+    margin-inline: auto;
+  }
+  .cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  @media (max-width: 860px) {
+    .emotional,
+    .enchape {
+      grid-template-columns: 1fr;
+    }
+    .emotional__media,
+    .enchape__media {
+      order: -1;
+    }
+  }
+  @media (max-width: 560px) {
+    .list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,175 @@
+---
+/**
+ * Contacto (/contacto) — intro + datos NAP + mapa Google + formulario.
+ * Copy literal de copywriting_central_oro.md §Página 6.
+ */
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import ContactForm from "../components/ContactForm.astro";
+import { site, whatsappLink, wa } from "../data/site.ts";
+
+const mapSrc =
+  "https://www.google.com/maps?q=" +
+  encodeURIComponent("Vicuña Mackenna 402, Temuco, Chile") +
+  "&output=embed";
+---
+
+<BaseLayout
+  title="Contacto | Joyería Central Oro Temuco"
+  description="Visítanos en Vicuña Mackenna 402, Temuco. Lunes a viernes de 10:00 a 18:00 hrs. WhatsApp: +56 9 9883 3021. También puedes escribirnos por el formulario."
+>
+  <section class="section section--first">
+    <div class="container">
+      <SectionTitle eyebrow="Centro de Temuco" title="Visítanos o escríbenos" as="h1" />
+      <p class="intro prose">
+        Atendemos de lunes a viernes en el centro de Temuco. Si tienes una consulta
+        puntual, también puedes escribirnos por WhatsApp o llenar el formulario y te
+        respondemos a la brevedad.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--top">
+    <div class="container contacto-grid">
+      <!-- Datos + mapa -->
+      <div class="info">
+        <h3 class="block-title">Datos de contacto</h3>
+        <dl class="nap">
+          <div class="nap__row">
+            <dt>Dirección</dt>
+            <dd>{site.address.full}</dd>
+          </div>
+          <div class="nap__row">
+            <dt>Horario mañana</dt>
+            <dd>{site.hours.morning}</dd>
+          </div>
+          <div class="nap__row">
+            <dt>Horario tarde</dt>
+            <dd>{site.hours.afternoon}</dd>
+          </div>
+          <div class="nap__row">
+            <dt>WhatsApp</dt>
+            <dd>
+              <a href={whatsappLink(wa.default)} target="_blank" rel="noopener noreferrer">
+                {site.phone.display}
+              </a>
+            </dd>
+          </div>
+          <div class="nap__row">
+            <dt>Email</dt>
+            <dd><a href={`mailto:${site.email}`}>{site.email}</a></dd>
+          </div>
+        </dl>
+
+        <p class="nap__note">
+          El local tiene cierre de 14:00 a 15:00 hrs. Si vienes antes de ese horario o
+          después de las 15:00, nos encuentras.
+        </p>
+
+        <div class="map">
+          <iframe
+            src={mapSrc}
+            title="Mapa de Joyería Central Oro — Vicuña Mackenna 402, Temuco"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+
+      <!-- Formulario -->
+      <div class="form-wrap">
+        <h3 class="block-title">Escríbenos</h3>
+        <ContactForm />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .section {
+    padding-block: var(--space-section);
+  }
+  .section--first {
+    padding-top: clamp(3rem, 7vw, 5rem);
+    padding-bottom: 0;
+  }
+  .section--top {
+    padding-top: clamp(2.5rem, 6vw, 4rem);
+  }
+  .intro {
+    margin-top: 1.75rem;
+    font-size: var(--fs-h3);
+    color: var(--color-bronce);
+    line-height: 1.6;
+  }
+
+  .contacto-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2.5rem, 6vw, 5rem);
+    align-items: start;
+  }
+  .block-title {
+    font-family: var(--font-display);
+    font-size: var(--fs-h2);
+    margin-bottom: 1.5rem;
+  }
+
+  .nap {
+    display: flex;
+    flex-direction: column;
+  }
+  .nap__row {
+    display: grid;
+    grid-template-columns: 9rem 1fr;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-oro) 18%, transparent);
+  }
+  .nap__row dt {
+    font-size: var(--fs-label);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-arena);
+    padding-top: 0.15rem;
+  }
+  .nap__row dd {
+    color: var(--color-tinta);
+  }
+  .nap__note {
+    margin-top: 1.25rem;
+    font-size: var(--fs-small);
+    color: var(--color-arena);
+    line-height: 1.55;
+  }
+
+  .map {
+    margin-top: 2rem;
+    aspect-ratio: 4 / 3;
+    border-radius: 2px;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--color-oro) 22%, transparent);
+  }
+  .map iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+
+  @media (max-width: 860px) {
+    .contacto-grid {
+      grid-template-columns: 1fr;
+    }
+    .form-wrap {
+      order: -1;
+    }
+  }
+  @media (max-width: 420px) {
+    .nap__row {
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+    }
+  }
+</style>

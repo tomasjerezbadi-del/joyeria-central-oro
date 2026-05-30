@@ -1,0 +1,166 @@
+---
+/**
+ * Colecciones (/colecciones) — 6 categorías con CategoryCard + CTA a personalizado.
+ * Copy literal de copywriting_central_oro.md §Página 2.
+ */
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import CategoryCard from "../components/CategoryCard.astro";
+import { whatsappLink, wa } from "../data/site.ts";
+
+import imgArgollas from "../assets/images/categoria-argollas.jpg";
+import imgAnillos from "../assets/images/categoria-anillos.jpg";
+import imgCollares from "../assets/images/categoria-colecciones.jpg";
+import imgPulseras from "../assets/images/categoria-pulseras.jpg";
+import imgAretes from "../assets/images/categoria-aretes.jpg";
+import imgPiedras from "../assets/images/categoria-piedras.jpg";
+
+const categorias = [
+  {
+    title: "Argollas de matrimonio",
+    text: "Las diseñamos juntos: el ancho, el acabado, si llevan grabado por dentro, si se les añade alguna piedra. Nada es estándar porque el compromiso tampoco lo es.",
+    image: imgArgollas,
+    alt: "Argollas de matrimonio en oro hechas a mano en Temuco",
+    cta: "Consultar por argollas",
+    message: wa.argollas,
+  },
+  {
+    title: "Anillos de compromiso",
+    text: "Hacemos el anillo desde cero, con la piedra que elijas y el diseño que imaginaste. Si todavía no sabes cómo quieres que sea, te ayudamos a definirlo en la primera reunión.",
+    image: imgAnillos,
+    alt: "Anillo de compromiso con piedra hecho a medida en Temuco",
+    cta: "Consultar por anillos de compromiso",
+    message: wa.anillos,
+  },
+  {
+    title: "Collares y cadenas",
+    text: "En oro y en plata, de distintos grosores y largos. Algunos los tenemos disponibles en el local; otros los fabricamos a pedido según lo que necesitas.",
+    image: imgCollares,
+    alt: "Collares y cadenas en oro y plata, joyería artesanal en Temuco",
+    cta: "Consultar disponibilidad",
+    message: "Hola, quiero consultar disponibilidad de collares y cadenas.",
+  },
+  {
+    title: "Pulseras y brazaletes",
+    text: "Diseños simples y piezas más elaboradas, según lo que buscas. También hacemos versiones personalizadas para regalos con significado.",
+    image: imgPulseras,
+    alt: "Pulseras y brazaletes en oro hechos a mano en Temuco",
+    cta: "Consultar disponibilidad",
+    message: "Hola, quiero consultar disponibilidad de pulseras y brazaletes.",
+  },
+  {
+    title: "Aretes y pendientes",
+    text: "Desde argollas finas hasta piezas más elaboradas. En oro, plata y con opción de incorporar piedras preciosas.",
+    image: imgAretes,
+    alt: "Aretes y pendientes en oro, joyería artesanal en Temuco",
+    cta: "Consultar disponibilidad",
+    message: "Hola, quiero consultar disponibilidad de aretes y pendientes.",
+  },
+  {
+    title: "Piezas con piedras preciosas",
+    text: "Trabajamos con piedras en anillos, aretes y collares. Si tienes una piedra que quieres montar o buscas algo específico, lo conversamos.",
+    image: imgPiedras,
+    alt: "Joyas con piedras preciosas hechas a medida en Temuco",
+    cta: "Consultar",
+    message: "Hola, me interesan piezas con piedras preciosas.",
+  },
+];
+---
+
+<BaseLayout
+  title="Colecciones | Joyería Central Oro Temuco"
+  description="Argollas de matrimonio, anillos de compromiso, collares, pulseras y aretes en oro y plata. Joyería artesanal en Temuco, La Araucanía."
+>
+  <section class="section section--first">
+    <div class="container">
+      <SectionTitle eyebrow="Joyería artesanal · Temuco" title="Nuestras colecciones" as="h1" />
+      <p class="intro prose">
+        Trabajamos principalmente por encargo, pero algunas piezas están disponibles en
+        el local. Cada una fue hecha a mano y tiene algo que ninguna cadena puede
+        ofrecer: un origen.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--top">
+    <div class="container cat-grid">
+      {
+        categorias.map((c) => (
+          <CategoryCard
+            title={c.title}
+            text={c.text}
+            image={c.image}
+            alt={c.alt}
+            href={whatsappLink(c.message)}
+            cta={c.cta}
+            external={true}
+          />
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cta">
+      <h2 class="cta__title">¿No encuentras lo que buscas?</h2>
+      <p class="cta__text prose">
+        La mayoría de nuestro trabajo es por encargo. Escríbenos y te contamos cómo
+        funciona.
+      </p>
+      <a href="/personalizado" class="btn btn--primary">Iniciar un trabajo personalizado</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .section {
+    padding-block: var(--space-section);
+  }
+  .section--first {
+    padding-top: clamp(3rem, 7vw, 5rem);
+    padding-bottom: 0;
+  }
+  .section--top {
+    padding-top: clamp(2.5rem, 6vw, 4rem);
+  }
+  .intro {
+    margin-top: 1.75rem;
+    font-size: var(--fs-h3);
+    color: var(--color-bronce);
+    line-height: 1.6;
+  }
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.25rem;
+  }
+  .cta__title {
+    font-style: italic;
+    font-size: var(--fs-h1);
+  }
+  .cta__text {
+    color: var(--color-bronce);
+    margin-inline: auto;
+  }
+  .cta .btn {
+    margin-top: 0.75rem;
+  }
+
+  @media (max-width: 900px) {
+    .cat-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 560px) {
+    .cat-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

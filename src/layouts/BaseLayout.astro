@@ -1,0 +1,94 @@
+---
+/**
+ * BaseLayout — estructura común de todas las páginas.
+ * <head> con SEO + Open Graph + JSON-LD, fuentes self-hosted, tokens globales,
+ * y el chrome del sitio (Header, Footer, WhatsAppButton).
+ * Ref: CLAUDE.md §8 (SEO técnico).
+ */
+import { site, ogDefaults, jsonLd } from "../data/site.ts";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
+
+// Fuentes self-hosted (solo los pesos usados — CLAUDE.md §10)
+import "@fontsource/cormorant-garamond/400.css";
+import "@fontsource/cormorant-garamond/500.css";
+import "@fontsource/cormorant-garamond/500-italic.css";
+import "@fontsource/hanken-grotesk/400.css";
+import "@fontsource/hanken-grotesk/500.css";
+
+// Tokens + reset + base
+import "../styles/global.css";
+
+interface Props {
+  /** Texto de <title> y og:title de la página */
+  title: string;
+  /** meta description y og:description de la página */
+  description: string;
+  /** Imagen OG opcional (por defecto la del sitio) */
+  ogImage?: string;
+}
+
+const { title, description, ogImage = ogDefaults.image } = Astro.props;
+
+// URL canónica absoluta de la página actual
+const canonical = new URL(Astro.url.pathname, site.url).href;
+const ogImageUrl = new URL(ogImage, site.url).href;
+---
+
+<!doctype html>
+<html lang="es-CL">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={ogDefaults.type} />
+    <meta property="og:locale" content={ogDefaults.locale} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:image" content={ogImageUrl} />
+
+    <!-- JSON-LD LocalBusiness (JewelryStore) en todas las páginas -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(jsonLd)}
+    />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Saltar al contenido</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <WhatsAppButton />
+
+    <style>
+      .skip-link {
+        position: absolute;
+        left: 1rem;
+        top: -3rem;
+        z-index: 1000;
+        background: var(--color-bronce);
+        color: var(--color-marfil);
+        padding: 0.6rem 1rem;
+        border-radius: 4px;
+        font-size: var(--fs-small);
+        transition: top 0.2s ease;
+      }
+      .skip-link:focus {
+        top: 1rem;
+        color: var(--color-marfil);
+      }
+    </style>
+  </body>
+</html>

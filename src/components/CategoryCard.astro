@@ -1,0 +1,102 @@
+---
+/**
+ * CategoryCard — tarjeta de categoría reutilizable.
+ * Imagen + título display + texto corto + enlace. Hover: imagen escala 1.03.
+ * Ref: CLAUDE.md §6.
+ */
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  title: string;
+  text: string;
+  image: ImageMetadata;
+  alt: string;
+  href: string;
+  cta?: string;
+  /** Si el enlace es externo (ej. WhatsApp), abre en pestaña nueva */
+  external?: boolean;
+}
+
+const { title, text, image, alt, href, cta = "Ver más", external = false } = Astro.props;
+const extAttrs = external ? { target: "_blank", rel: "noopener noreferrer" } : {};
+---
+
+<a href={href} class="card" {...extAttrs}>
+  <div class="card__media">
+    <Image
+      src={image}
+      alt={alt}
+      widths={[400, 700]}
+      sizes="(max-width: 720px) 100vw, 33vw"
+      loading="lazy"
+      class="card__img"
+    />
+  </div>
+  <div class="card__body">
+    <h3 class="card__title">{title}</h3>
+    <p class="card__text">{text}</p>
+    <span class="card__cta">{cta} <span aria-hidden="true">→</span></span>
+  </div>
+</a>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-crema-alt);
+    border: 1px solid color-mix(in srgb, var(--color-oro) 18%, transparent);
+    border-radius: 2px;
+    overflow: hidden;
+    color: inherit;
+    transition: border-color 0.25s ease, transform 0.25s ease;
+  }
+  .card:hover {
+    color: inherit;
+    border-color: color-mix(in srgb, var(--color-oro) 50%, transparent);
+  }
+
+  .card__media {
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+  }
+  .card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .card:hover .card__img {
+    transform: scale(1.03);
+  }
+
+  .card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 1.5rem;
+  }
+  .card__title {
+    font-size: var(--fs-h3);
+    line-height: 1.2;
+  }
+  .card__text {
+    font-size: var(--fs-small);
+    color: var(--color-bronce);
+    line-height: 1.55;
+    flex-grow: 1;
+  }
+  .card__cta {
+    margin-top: 0.5rem;
+    font-size: var(--fs-small);
+    font-weight: 500;
+    color: var(--color-oro);
+  }
+  .card__cta span {
+    transition: transform 0.2s ease;
+    display: inline-block;
+  }
+  .card:hover .card__cta span {
+    transform: translateX(4px);
+  }
+</style>

@@ -1,0 +1,195 @@
+---
+/**
+ * Sobre nosotros (/sobre-nosotros) — historia + diferenciadores + datos + CTA.
+ * Copy literal de copywriting_central_oro.md §Página 5.
+ */
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import { Image } from "astro:assets";
+// PLACEHOLDER: reemplazar con foto propia del taller (CLAUDE.md §9)
+import imgTaller from "../assets/images/hero-taller.jpg";
+
+const datos = [
+  "Más de 30 años de trayectoria en La Araucanía.",
+  "Cada pieza, fabricada a mano por quienes te atienden.",
+  "Trabajo personalizado desde la primera reunión hasta la entrega.",
+];
+---
+
+<BaseLayout
+  title="Sobre Nosotros | Joyería Central Oro Temuco desde 1995"
+  description="Joyería Central Oro es un negocio familiar en Temuco con más de 30 años de trayectoria en joyería artesanal y personalizada. Conoce nuestra historia en La Araucanía."
+>
+  <!-- Historia -->
+  <section class="section section--first">
+    <div class="container historia">
+      <div class="historia__text">
+        <SectionTitle eyebrow="Negocio familiar · desde 1995" title="Treinta años haciendo joyas en Temuco" as="h1" />
+        <p>
+          Joyería Central Oro abrió sus puertas en 1995, en el centro de Temuco. Desde el
+          primer día fue un negocio familiar: lo fundaron dos personas que pusieron su
+          oficio por delante de todo lo demás, y así lo siguen llevando.
+        </p>
+        <p>
+          Más de treinta años después, nada cambió demasiado en lo esencial. Seguimos
+          siendo los mismos dos que atienden el local, que fabrican cada pieza y que
+          conversan con cada cliente. No somos una cadena ni una tienda de catálogo.
+          Somos un taller.
+        </p>
+      </div>
+      <div class="historia__media">
+        <Image
+          src={imgTaller}
+          alt="Maestro joyero trabajando a mano en el taller de Joyería Central Oro en Temuco"
+          widths={[480, 800]}
+          sizes="(max-width: 860px) 100vw, 45vw"
+          loading="lazy"
+          class="historia__img"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Diferenciadores -->
+  <section class="section section--crema">
+    <div class="container prose-wide">
+      <h2 class="dif__title">
+        Lo que nos diferencia no es algo que se pueda poner en vitrina
+      </h2>
+      <p>
+        Nuestros clientes vuelven —y nos mandan a sus hijos, a sus amigos, a sus hijos de
+        nuevo— por razones que tienen poco que ver con el precio.
+      </p>
+      <p>
+        Vuelven porque cuando traen una idea, los escuchamos. Porque cuando algo no sale
+        como debería, lo corregimos. Porque saben que la persona que les responde el
+        WhatsApp es la misma que fabrica la joya.
+      </p>
+      <p>
+        Hay muchas joyerías en Temuco. Cada una elige su camino. El nuestro siempre fue
+        el mismo.
+      </p>
+    </div>
+  </section>
+
+  <!-- Datos rápidos -->
+  <section class="section">
+    <div class="container datos">
+      {
+        datos.map((d) => (
+          <div class="dato">
+            <span class="dato__rombo" aria-hidden="true" />
+            <p>{d}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section section--crema">
+    <div class="container cta">
+      <h2 class="cta__title">¿Quieres conocer el local o tienes una consulta?</h2>
+      <a href="/contacto" class="btn btn--primary">Contactarnos</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .section {
+    padding-block: var(--space-section);
+  }
+  .section--first {
+    padding-top: clamp(3rem, 7vw, 5rem);
+  }
+  .section--crema {
+    background: var(--color-crema);
+  }
+
+  .historia {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+  .historia__text p {
+    color: var(--color-bronce);
+    line-height: 1.7;
+    max-width: 50ch;
+    margin-top: 1.1rem;
+  }
+  .historia__img {
+    width: 100%;
+    height: clamp(18rem, 40vw, 30rem);
+    object-fit: cover;
+    border-radius: 2px;
+  }
+
+  .prose-wide {
+    max-width: 760px;
+  }
+  .dif__title {
+    font-style: italic;
+    font-size: var(--fs-h1);
+    line-height: 1.2;
+    margin-bottom: 1.75rem;
+  }
+  .prose-wide p {
+    color: var(--color-bronce);
+    line-height: 1.7;
+  }
+  .prose-wide p + p {
+    margin-top: 1.1rem;
+  }
+
+  .datos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(2rem, 5vw, 3.5rem);
+  }
+  .dato {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .dato__rombo {
+    width: 9px;
+    height: 9px;
+    background: var(--color-oro);
+    transform: rotate(45deg);
+  }
+  .dato p {
+    font-family: var(--font-display);
+    font-size: var(--fs-h3);
+    color: var(--color-tinta);
+    line-height: 1.4;
+  }
+
+  .cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.75rem;
+  }
+  .cta__title {
+    font-style: italic;
+    font-size: var(--fs-h1);
+    max-width: 20ch;
+  }
+
+  @media (max-width: 860px) {
+    .historia {
+      grid-template-columns: 1fr;
+    }
+    .historia__media {
+      order: -1;
+    }
+  }
+  @media (max-width: 680px) {
+    .datos {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+</style>

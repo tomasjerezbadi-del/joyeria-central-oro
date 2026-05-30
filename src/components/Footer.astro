@@ -1,0 +1,117 @@
+---
+/**
+ * Footer — 3 columnas (marca / navegación / contacto NAP).
+ * Texto literal de copywriting_central_oro.md §Footer. NAP idéntico al resto del sitio.
+ */
+import { site, footerNav, whatsappLink, wa } from "../data/site.ts";
+---
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <!-- Columna 1 — Marca -->
+    <div class="footer__col">
+      <p class="footer__brand">{site.shortName}</p>
+      <p class="footer__tagline">{site.tagline}</p>
+    </div>
+
+    <!-- Columna 2 — Navegación -->
+    <nav class="footer__col" aria-label="Navegación del pie de página">
+      <p class="footer__heading">Navegación</p>
+      <ul class="footer__nav">
+        {
+          footerNav.map((item) => (
+            <li>
+              <a href={item.href}>{item.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <!-- Columna 3 — Contacto (NAP) -->
+    <div class="footer__col">
+      <p class="footer__heading">Contacto</p>
+      <address class="footer__contact">
+        <span>{site.address.full}</span>
+        <span>{site.hours.compact}</span>
+        <a href={whatsappLink(wa.default)} rel="noopener">{site.phone.display}</a>
+        <a href={`mailto:${site.email}`}>{site.email}</a>
+      </address>
+    </div>
+  </div>
+
+  <div class="container footer__bottom">
+    <p>{site.copyright}</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--color-crema);
+    border-top: 1px solid color-mix(in srgb, var(--color-oro) 30%, transparent);
+    margin-top: var(--space-section);
+    padding-top: clamp(3rem, 7vw, 5rem);
+    padding-bottom: 2rem;
+  }
+
+  .footer__inner {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1.2fr;
+    gap: clamp(2rem, 5vw, 4rem);
+  }
+
+  .footer__brand {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.5rem;
+    color: var(--color-tinta);
+  }
+  .footer__tagline {
+    margin-top: 0.5rem;
+    font-size: var(--fs-small);
+    color: var(--color-arena);
+    max-width: 22ch;
+  }
+
+  .footer__heading {
+    font-size: var(--fs-label);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--color-arena);
+    margin-bottom: 1.1rem;
+  }
+
+  .footer__nav,
+  .footer__contact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+  .footer__contact {
+    font-style: normal;
+    font-size: var(--fs-small);
+    color: var(--color-bronce);
+  }
+  .footer__nav a,
+  .footer__contact a {
+    font-size: var(--fs-small);
+    color: var(--color-bronce);
+  }
+
+  .footer__bottom {
+    margin-top: clamp(2.5rem, 6vw, 4rem);
+    padding-top: 1.5rem;
+    border-top: 1px solid color-mix(in srgb, var(--color-oro) 18%, transparent);
+    font-size: var(--fs-label);
+    letter-spacing: 0.04em;
+    color: var(--color-arena);
+  }
+
+  @media (max-width: 720px) {
+    .footer__inner {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+  }
+</style>
