@@ -43,8 +43,8 @@ export const site = {
   // PLACEHOLDER — reemplazar al confirmar dominio (copywriting §Datos técnicos)
   email: "contacto@joyeriacentraloro.cl",
 
-  // PLACEHOLDER — crear cuenta gratis en https://web3forms.com y pegar el access key
-  web3formsKey: "REEMPLAZAR_CON_ACCESS_KEY_DE_WEB3FORMS",
+  // Access key de Web3Forms (alimenta el formulario de newsletter en /contacto)
+  web3formsKey: "1fbee60b-7ac5-40b8-998a-dc918839fee2",
 
   // ---- Horario ----
   hours: {
