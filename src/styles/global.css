@@ -72,6 +72,12 @@ svg {
   height: auto;
 }
 
+/* El atributo [hidden] debe ocultar siempre, aunque haya display: flex/grid
+   en una regla de autor (normalize). */
+[hidden] {
+  display: none !important;
+}
+
 input,
 button,
 textarea,

@@ -14,8 +14,13 @@ import { site } from "../data/site.ts";
     novedades del taller. Sin spam: solo lo que vale la pena.
   </p>
 
-  <form class="newsletter__form" action="https://api.web3forms.com/submit" method="POST">
-    <!-- Access key de Web3Forms (PLACEHOLDER — ver src/data/site.ts) -->
+  <form
+    class="newsletter__form"
+    action="https://api.web3forms.com/submit"
+    method="POST"
+    data-newsletter-form
+  >
+    <!-- Access key de Web3Forms (ver src/data/site.ts) -->
     <input type="hidden" name="access_key" value={site.web3formsKey} />
     <input type="hidden" name="subject" value="Nueva suscripción al newsletter — Central Oro" />
     <input type="hidden" name="from_name" value="Newsletter Joyería Central Oro" />
@@ -35,8 +40,70 @@ import { site } from "../data/site.ts";
       <button type="submit" class="btn btn--primary">Suscribirme</button>
     </div>
     <p class="newsletter__note">Puedes darte de baja cuando quieras.</p>
+
+    <!-- Mensaje inline de éxito/error (se rellena por JS) -->
+    <p class="newsletter__status" data-newsletter-status hidden aria-live="polite"></p>
   </form>
 </div>
+
+<script>
+  // Envío AJAX a Web3Forms con feedback inline (sin recargar). Mejora progresiva:
+  // si este script no carga, el form hace un POST normal (action/method) igual.
+  const form = document.querySelector("[data-newsletter-form]");
+  if (form instanceof HTMLFormElement) {
+    const status = form.querySelector("[data-newsletter-status]");
+    const row = form.querySelector(".newsletter__row");
+    const note = form.querySelector(".newsletter__note");
+    const btn = form.querySelector('button[type="submit"]');
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const original = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = "Enviando…";
+      if (status) {
+        status.hidden = true;
+        status.removeAttribute("data-state");
+      }
+
+      try {
+        const payload = Object.fromEntries(new FormData(form));
+        const res = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          form.reset();
+          if (row) row.hidden = true;
+          if (note) note.hidden = true;
+          if (status) {
+            status.dataset.state = "ok";
+            status.textContent = "¡Listo! Te avisaremos de las novedades.";
+            status.hidden = false;
+          }
+        } else {
+          throw new Error(data.message || "Error");
+        }
+      } catch (err) {
+        if (status) {
+          status.dataset.state = "error";
+          status.textContent =
+            "No pudimos completar la suscripción. Inténtalo de nuevo o escríbenos por WhatsApp.";
+          status.hidden = false;
+        }
+      } finally {
+        btn.disabled = false;
+        btn.textContent = original;
+      }
+    });
+  }
+</script>
 
 <style>
   .newsletter {
@@ -85,6 +152,24 @@ import { site } from "../data/site.ts";
     margin-top: 0.85rem;
     font-size: var(--fs-small);
     color: var(--color-arena);
+  }
+  .newsletter__status {
+    margin-top: 1rem;
+    font-size: var(--fs-small);
+    line-height: 1.5;
+    padding: 0.75rem 1rem;
+    border-radius: 2px;
+    border-left: 3px solid var(--color-oro);
+  }
+  .newsletter__status[data-state="ok"] {
+    color: var(--color-tinta);
+    background: color-mix(in srgb, var(--color-oro) 14%, transparent);
+    border-left-color: var(--color-oro);
+  }
+  .newsletter__status[data-state="error"] {
+    color: var(--color-bronce);
+    background: color-mix(in srgb, var(--color-bronce) 10%, transparent);
+    border-left-color: var(--color-bronce);
   }
 
   @media (max-width: 460px) {
