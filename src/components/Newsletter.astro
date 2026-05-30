@@ -1,0 +1,98 @@
+---
+/**
+ * Newsletter — suscripción por correo. Envío vía Web3Forms (sin backend), reusando
+ * el mismo access key. Los correos llegan a la bandeja del negocio; más adelante se
+ * puede conectar a un servicio de email marketing (Mailchimp, etc.).
+ */
+import { site } from "../data/site.ts";
+---
+
+<div class="newsletter">
+  <h2 class="newsletter__title">Recibe nuestras novedades</h2>
+  <p class="newsletter__text">
+    Te avisamos cuando tengamos piezas nuevas en el local, ideas para regalos y
+    novedades del taller. Sin spam: solo lo que vale la pena.
+  </p>
+
+  <form class="newsletter__form" action="https://api.web3forms.com/submit" method="POST">
+    <!-- Access key de Web3Forms (PLACEHOLDER — ver src/data/site.ts) -->
+    <input type="hidden" name="access_key" value={site.web3formsKey} />
+    <input type="hidden" name="subject" value="Nueva suscripción al newsletter — Central Oro" />
+    <input type="hidden" name="from_name" value="Newsletter Joyería Central Oro" />
+    <!-- Honeypot anti-spam -->
+    <input type="checkbox" name="botcheck" class="sr-only" tabindex="-1" autocomplete="off" />
+
+    <label for="news-email" class="sr-only">Correo electrónico</label>
+    <div class="newsletter__row">
+      <input
+        type="email"
+        id="news-email"
+        name="email"
+        required
+        placeholder="tu@correo.cl"
+        autocomplete="email"
+      />
+      <button type="submit" class="btn btn--primary">Suscribirme</button>
+    </div>
+    <p class="newsletter__note">Puedes darte de baja cuando quieras.</p>
+  </form>
+</div>
+
+<style>
+  .newsletter {
+    background: var(--color-crema-alt);
+    border: 1px solid color-mix(in srgb, var(--color-oro) 22%, transparent);
+    border-radius: 2px;
+    padding: clamp(1.5rem, 4vw, 2.25rem);
+  }
+  .newsletter__title {
+    font-family: var(--font-display);
+    font-size: var(--fs-h2);
+    line-height: 1.2;
+  }
+  .newsletter__text {
+    margin-top: 0.85rem;
+    color: var(--color-bronce);
+    line-height: 1.6;
+    max-width: 44ch;
+  }
+  .newsletter__form {
+    margin-top: 1.75rem;
+  }
+  .newsletter__row {
+    display: flex;
+    gap: 0.75rem;
+  }
+  .newsletter__row input {
+    flex: 1;
+    min-width: 0;
+    font-size: var(--fs-body);
+    padding: 0.8rem 1rem;
+    background: var(--color-marfil);
+    border: 1px solid color-mix(in srgb, var(--color-bronce) 35%, transparent);
+    border-radius: 2px;
+    color: var(--color-tinta);
+  }
+  .newsletter__row input:focus {
+    outline: none;
+    border-color: var(--color-oro);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-oro) 25%, transparent);
+  }
+  .newsletter__row .btn {
+    flex-shrink: 0;
+  }
+  .newsletter__note {
+    margin-top: 0.85rem;
+    font-size: var(--fs-small);
+    color: var(--color-arena);
+  }
+
+  @media (max-width: 460px) {
+    .newsletter__row {
+      flex-direction: column;
+    }
+    .newsletter__row .btn {
+      width: 100%;
+    }
+  }
+</style>

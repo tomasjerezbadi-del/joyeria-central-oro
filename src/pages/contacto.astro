@@ -1,11 +1,12 @@
 ---
 /**
- * Contacto (/contacto) — intro + datos NAP + mapa Google + formulario.
- * Copy literal de copywriting_central_oro.md §Página 6.
+ * Contacto (/contacto) — intro + datos NAP + mapa Google + WhatsApp + newsletter.
+ * El contacto es solo por WhatsApp; el formulario de email se reemplazó por una
+ * suscripción al newsletter. Copy base de copywriting_central_oro.md §Página 6.
  */
 import BaseLayout from "../layouts/BaseLayout.astro";
 import SectionTitle from "../components/SectionTitle.astro";
-import ContactForm from "../components/ContactForm.astro";
+import Newsletter from "../components/Newsletter.astro";
 import { site, whatsappLink, wa } from "../data/site.ts";
 
 const mapSrc =
@@ -16,15 +17,15 @@ const mapSrc =
 
 <BaseLayout
   title="Contacto | Joyería Central Oro Temuco"
-  description="Visítanos en Vicuña Mackenna 402, Temuco. Lunes a viernes de 10:00 a 18:00 hrs. WhatsApp: +56 9 9883 3021. También puedes escribirnos por el formulario."
+  description="Visítanos en Vicuña Mackenna 402, Temuco. Lunes a viernes de 10:00 a 18:00 hrs. Escríbenos por WhatsApp al +56 9 9883 3021 para cotizar o agendar una visita."
 >
   <section class="section section--first">
     <div class="container">
       <SectionTitle eyebrow="Centro de Temuco" title="Visítanos o escríbenos" as="h1" />
       <p class="intro prose">
-        Atendemos de lunes a viernes en el centro de Temuco. Si tienes una consulta
-        puntual, también puedes escribirnos por WhatsApp o llenar el formulario y te
-        respondemos a la brevedad.
+        Atendemos de lunes a viernes en el centro de Temuco. La forma más rápida de
+        contactarnos es por WhatsApp: escríbenos y te respondemos en el mismo día hábil
+        o al siguiente.
       </p>
     </div>
   </section>
@@ -33,7 +34,7 @@ const mapSrc =
     <div class="container contacto-grid">
       <!-- Datos + mapa -->
       <div class="info">
-        <h3 class="block-title">Datos de contacto</h3>
+        <h2 class="block-title">Datos de contacto</h2>
         <dl class="nap">
           <div class="nap__row">
             <dt>Dirección</dt>
@@ -55,10 +56,6 @@ const mapSrc =
               </a>
             </dd>
           </div>
-          <div class="nap__row">
-            <dt>Email</dt>
-            <dd><a href={`mailto:${site.email}`}>{site.email}</a></dd>
-          </div>
         </dl>
 
         <p class="nap__note">
@@ -77,10 +74,26 @@ const mapSrc =
         </div>
       </div>
 
-      <!-- Formulario -->
-      <div class="form-wrap">
-        <h3 class="block-title">Escríbenos</h3>
-        <ContactForm />
+      <!-- Contacto por WhatsApp + Newsletter -->
+      <div class="side">
+        <div class="wa-block">
+          <h2 class="block-title">Escríbenos por WhatsApp</h2>
+          <p class="wa-block__text">
+            Es la forma más rápida de contactarnos. Cuéntanos qué necesitas —una
+            cotización, una reparación o una visita al local— y te respondemos a la
+            brevedad.
+          </p>
+          <a
+            class="btn btn--primary"
+            href={whatsappLink(wa.default)}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Abrir WhatsApp
+          </a>
+        </div>
+
+        <Newsletter />
       </div>
     </div>
   </section>
@@ -158,11 +171,23 @@ const mapSrc =
     display: block;
   }
 
+  .side {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2rem, 5vw, 3rem);
+  }
+  .wa-block__text {
+    color: var(--color-bronce);
+    line-height: 1.7;
+    max-width: 46ch;
+    margin-bottom: 1.5rem;
+  }
+
   @media (max-width: 860px) {
     .contacto-grid {
       grid-template-columns: 1fr;
     }
-    .form-wrap {
+    .side {
       order: -1;
     }
   }
