@@ -1,0 +1,7 @@
+name = "joyeria-central-oro"
+compatibility_date = "2025-01-01"
+
+# Sirve el contenido de dist/ como assets estáticos puros.
+# Sin adapter, sin KV, sin sesiones — sitio 100% estático.
+[assets]
+directory = "./dist"
